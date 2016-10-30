@@ -1,20 +1,32 @@
-@*
- * This template takes a single argument, a String containing a
- * message to display.
- *@
-@(message: String)
 
-@*
- * Call the `main` template with two arguments. The first
- * argument is a `String` with the title of the page, the second
- * argument is an `Html` object containing the body of the page.
- *@
-@main("Welcome to Play") {
+@import forms._
+@import play.api.i18n.Messages
+@import play.api.Play.current
+@import play.api.i18n.Messages.Implicits._
 
-    @*
-     * Get an `Html` object by calling the built-in Play welcome
-     * template and passing a `String` message.
-     *@
-    @play20.welcome(message, style = "Scala")
+@(form: Form[_], message: String)(implicit request: Request[_])
+
+@main("Welcome to my OrangeBus Test") {
+
+    @Html("Welcome to the form submission page")
+
+    @helper.form(action = routes.HomeController.submit(), 'id -> "mySubmissionForm") {
+
+        @helper.inputText(
+                    form("name"),
+                    'id -> "name",
+                    '_label -> "What is your name?",
+                    '_showConstraints  -> false
+                )
+        @helper.inputText(
+            form("email"),
+            'id -> "email",
+            '_label -> "What is your email address?",
+            '_showConstraints  -> false
+        )
+
+        <input class="button" type="submit" value="Continue" />
+
+    }
 
 }

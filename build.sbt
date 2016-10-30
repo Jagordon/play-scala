@@ -1,4 +1,4 @@
-name := """play-scala"""
+name := """OrangeBus-FE"""
 
 version := "1.0-SNAPSHOT"
 
@@ -10,5 +10,4 @@ libraryDependencies += jdbc
 libraryDependencies += cache
 libraryDependencies += ws
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test
-
-
+libraryDependencies +=  "org.scalaj" %% "scalaj-http" % "2.3.0"

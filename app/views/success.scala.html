@@ -1,0 +1,16 @@
+
+@import play.api.i18n.Messages
+@import play.api.Play.current
+@import play.api.i18n.Messages.Implicits._
+
+@(form: Form[_], message: String)(implicit request: Request[_])
+
+@main("Submission successful!") {
+
+@Html("Submission successful!")
+
+    <p>
+        You have successfully submitted your data.
+    </p>
+
+}
