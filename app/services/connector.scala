@@ -7,7 +7,7 @@ object connector  {
 
   def send(content: String) = {
     try {
-      val request = Http("http://localhost:9001/v1/posts").postData(content)
+      val request = Http("http://localhost:9001/api").postData(content)
         .header("Content-Type", "application/json")
         .header("Charset", "UTF-8")
         .timeout(connTimeoutMs = 1000, readTimeoutMs = 5000).asString

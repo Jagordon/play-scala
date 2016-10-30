@@ -20,7 +20,7 @@ class HomeController @Inject() extends Controller {
     submissionForms.form.bindFromRequest().fold(
       hasErrors => BadRequest(views.html.index(hasErrors, "Your submission has errors")),
       success => {
-        val dataSubmission = s"""{"name":"$success.name","email":"$success.email"}"""
+        val dataSubmission = s"""{"name":"${success.name}","email":"${success.email}"}"""
         val response = send(dataSubmission)
         if (response) {
           Ok(views.html.success(submissionForms.form, "We did it!"))
