@@ -1,6 +1,5 @@
 package services
 
-import scala.util.control.Exception
 import scalaj.http._
 
 object connector  {
