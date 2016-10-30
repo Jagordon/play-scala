@@ -2,11 +2,6 @@ import org.scalatestplus.play._
 import play.api.test._
 import play.api.test.Helpers._
 
-/**
- * Add your spec here.
- * You can mock out a whole application including requests, plugins etc.
- * For more information, consult the wiki.
- */
 class ApplicationSpec extends PlaySpec with OneAppPerTest {
 
   "Routes" should {
@@ -25,6 +20,30 @@ class ApplicationSpec extends PlaySpec with OneAppPerTest {
       status(home) mustBe OK
       contentType(home) mustBe Some("text/html")
       contentAsString(home) must include ("Your new application is ready.")
+    }
+
+    "successfully submit with good data" in {
+      val controller = new controllers.HomeController()
+      val request = FakeRequest(POST, "/")
+        .withFormUrlEncodedBody(
+          "name" -> "Richard",
+          "email" -> "joe@joe.com"
+        )
+      val result = controller.submit()(request)
+      status(result) mustBe OK
+      contentAsString(result) must include ("You have successfully submitted your data.")
+    }
+
+    "fail to submit with bad data" in {
+      val controller = new controllers.HomeController()
+      val request = FakeRequest(POST, "/")
+        .withFormUrlEncodedBody(
+          "name" -> "",
+          "email" -> "222"
+        )
+      val result = controller.submit()(request)
+      status(result) mustBe 400
+      contentAsString(result) must include ("Your submission has errors")
     }
 
   }
