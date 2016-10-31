@@ -1,9 +1,14 @@
 package services
 
-import scala.util.control.Exception
 import scalaj.http._
+import javax.inject._
 
-object connector  {
+trait APIConnector {
+  def send(content: String): Boolean
+}
+
+@Singleton
+class HttpAPIConnector extends APIConnector {
 
   def send(content: String) = {
     try {
@@ -12,7 +17,7 @@ object connector  {
         .header("Charset", "UTF-8")
         .timeout(connTimeoutMs = 1000, readTimeoutMs = 5000).asString
         request match {
-          case request if request.isError => false
+          case r if r.isError => false
           case _ =>                          true
         }
     } catch {
