@@ -1,6 +1,12 @@
 import org.scalatestplus.play._
 import play.api.test._
 import play.api.test.Helpers._
+import services.APIConnector
+
+
+class StubAPIConnector extends APIConnector {
+  override def send(content: String): Boolean = true
+}
 
 class ApplicationSpec extends PlaySpec with OneAppPerTest {
 
@@ -23,7 +29,7 @@ class ApplicationSpec extends PlaySpec with OneAppPerTest {
     }
 
     "successfully submit with good data" in {
-      val controller = new controllers.HomeController()
+      val controller = new controllers.HomeController(new StubAPIConnector)
       val request = FakeRequest(POST, "/")
         .withFormUrlEncodedBody(
           "name" -> "Richard",
@@ -35,7 +41,7 @@ class ApplicationSpec extends PlaySpec with OneAppPerTest {
     }
 
     "fail to submit with bad data" in {
-      val controller = new controllers.HomeController()
+      val controller = new controllers.HomeController(new StubAPIConnector)
       val request = FakeRequest(POST, "/")
         .withFormUrlEncodedBody(
           "name" -> "",
